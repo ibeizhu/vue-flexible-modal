@@ -17,6 +17,52 @@ import Modal from 'vue-flexible-modal';
 # Usage
 Please view the example folder
 
+```html
+<script>
+    import Modal from '../src/Modal';
+
+    export default {
+        el: '#page',
+        components: {
+            Modal
+        },
+        events:{
+            MODAL_OK_EVENT(){
+                // you can manual set modal show or hide use this.modal.visible
+                // this.modal.visible = false;
+            },
+            MODAL_CANCEL_EVENT(){
+
+            }
+        },
+        data:{
+            modal:{
+                title:'I am modal title',
+                visible:false,
+                text:''
+            }
+        },
+        methods:{
+            onShowModal(){
+                this.modal.visible = !this.modal.visible;
+            }
+        }
+    };
+
+</script>
+
+<template>
+    <div>
+        <button @click="onShowModal">Click Show Modal</button>
+        <modal :title="modal.title" :visible.sync="modal.visible" :bg-click="false" :verify="true">
+            <p class="control">
+                <label class="label">Name:</label>
+                <input class="input" type="text" v-model="modal.text" placeholder="Your name">
+            </p>
+        </modal>
+    </div>
+</template>
+```
 
 # API
 | Option             | Description                                                      | Value                  | Default  |

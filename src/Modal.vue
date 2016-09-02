@@ -58,12 +58,14 @@
         watch: {
             visible(){
                 if (this.visible) {
-                    this.bodyStyle = {
-                        top: `${(window.screen.height - this.$els.content.offsetHeight) / 2}px`,
-                        left: `${(window.screen.width - this.$els.content.offsetWidth) / 2}px`
-                    }
+                    this.computeStyle();
                 }
             }
+        },
+        ready(){
+            this.bind(window,"resize",function(){
+                this.computeStyle();
+            }.bind(this));
         },
         methods: {
             show () {
@@ -86,6 +88,21 @@
             cancel () {
                 this.hide();
                 this.$dispatch('MODAL_CANCEL_EVENT')
+            },
+            computeStyle(){
+                let innerHeight = window.innerHeight - this.$els.content.offsetHeight > 0?window.innerHeight - this.$els.content.offsetHeight:0;
+                let innerWidth = window.innerWidth - this.$els.content.offsetWidth > 0?window.innerWidth - this.$els.content.offsetWidth:0;
+                this.bodyStyle = {
+                    top: `${innerHeight / 2}px`,
+                    left: `${innerWidth / 2}px`
+                }
+            },
+            bind(el,eventName,fn){
+                if (window.addEventListener) {
+                    el.addEventListener(eventName, fn,false);
+                } else if (window.attachEvent) {
+                    el.attachEvent("on" + eventName, fn);
+                }
             }
         }
     }
@@ -203,7 +220,7 @@
                 background-color: #1fc8db;
                 border-color: transparent;
                 color: #fff;
-                margin-left:10px;
+                margin-left:5px;
                 &:hover{
                      background-color: #199fae;
                      border-color: transparent;

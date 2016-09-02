@@ -1,6 +1,4 @@
 # vue-flexible-modal
-
-# Overview
 a flexible modal component by vue.js
 
 # Installation
@@ -67,9 +65,9 @@ Please view the example folder
 # API
 | Option             | Description                                                      | Value                  | Default  |
 |--------------------|------------------------------------------------------------------|------------------------|----------|
-| title            | Modal Tile                                  | String                | ''  |
-| okText          | ok button text                              | String |          | 'ok'  |
-| cancelText         | cancel button text                             | String |          | 'cancel' |
+| title            | Modal Title                                  | String                | ''  |
+| okText          | ok button text                              | String |        'ok'  |
+| cancelText         | cancel button text                             | String |          'cancel' |
 | visible             | control modal show or hide                                     | Boolean                 |     'false'     |
 | transition              | modal show or hide animation/transition                | String                | 'bounce'  |
 | verify         | if need verify form data when click ok button                           | Boolean                 |    'false'      |

@@ -6,6 +6,15 @@
         components: {
             Modal
         },
+        events:{
+            MODAL_OK_EVENT(){
+                // you can manual set modal show or hide use this.modal.visible
+                // this.modal.visible = false;
+            },
+            MODAL_CANCEL_EVENT(){
+
+            }
+        },
         data:{
             modal:{
                 title:'I am modal title',

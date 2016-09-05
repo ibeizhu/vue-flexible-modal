@@ -10,8 +10,19 @@
             MODAL_OK_EVENT(){
                 // you can manual set modal show or hide use this.modal.visible
                 // this.modal.visible = false;
+                if(!this.modal.text){
+                    alert('Text can not be empty');
+                    return false;
+                }
+                this.modal.visible = false;
             },
             MODAL_CANCEL_EVENT(){
+
+            },
+            MODAL_OK_EVENT2(){
+                // TODO your logic
+            },
+            MODAL_CANCEL_EVENT2(){
 
             }
         },
@@ -21,13 +32,24 @@
                 visible:false,
                 text:''
             },
-            bgStyle:{
-                'z-index':'4000'
+            modal2:{
+                title:'I am modal2 title',
+                visible:false,
+                text:'',
+                bgStyle:{
+                    'z-index':'4000'
+                },
+                contentStyle:{
+                    'width':'300px'
+                }
             }
         },
         methods:{
-            onShowModal(){
+            onShowModal1(){
                 this.modal.visible = !this.modal.visible;
+            },
+            onShowModal2(){
+                this.modal2.visible = !this.modal2.visible;
             }
         }
     };
@@ -36,12 +58,26 @@
 
 <template>
     <div>
-        <button @click="onShowModal">Click Show Modal</button>
-        <modal :title="modal.title" :visible.sync="modal.visible" :bg-click="false" :verify="true" :bg-style="bgStyle">
+        <br>
+        <br>
+        <button @click="onShowModal1">Click Show Modal1</button>
+        <br>
+        <br>
+        <label class="label">Use as MessageBox</label>
+        <br>
+        <button @click="onShowModal2">Click Show Modal2</button>
+        <modal :title="modal.title" :visible.sync="modal.visible" :verify="true">
             <label class="label">Slot Area,write your code in here</label>
             <p class="control">
                 <label class="label">Name:</label>
                 <input class="input" type="text" v-model="modal.text" placeholder="Your name">
+            </p>
+        </modal>
+
+        <modal :title="modal2.title" :visible.sync="modal2.visible" :bg-click="false" :verify="true" :bg-style="modal2.bgStyle" :content-style="modal2.contentStyle" :only-body="true" :modal-id="1">
+            <label class="label">Welcome to use vue-flexible-modal</label>
+            <p class="control">
+                <button class="ok" @click="onShowModal2">ok</button>
             </p>
         </modal>
     </div>
@@ -112,5 +148,8 @@
         position: relative;
         vertical-align: top;
         box-shadow: inset 0 1px 2px hsla(0,0%,7%,.1);
+    }
+    .ok{
+        float: right;
     }
 </style>

@@ -1,14 +1,14 @@
 <template>
-    <div v-show="visible" class="modal-background" @click="bgClick" :style="bgStyle"></div>
-    <div v-el:content class="modal-content" v-show="visible" :transition="transition" :style="[contentStyle,bodyStyle]">
-        <header v-if="!onlyBody" class="modal-content-head">
-            <p class="modal-content-title">{{ title }}</p>
+    <div v-show="visible" class="modal-bg" @click="onBgClick" :style="bgStyle"></div>
+    <div v-el:content class="modal-ct" v-show="visible" :transition="transition" :style="[contentStyle,bodyStyle]">
+        <header v-if="!onlyBody" class="modal-ct-head">
+            <p class="modal-ct-title">{{ title }}</p>
             <button class="delete" @click="hide"></button>
         </header>
-        <section class="modal-content-body">
+        <section class="modal-ct-body">
             <slot></slot>
         </section>
-        <footer v-if="!onlyBody" class="modal-content-foot clearfix">
+        <footer v-if="!onlyBody" class="modal-ct-foot clearfix">
             <div class="fright">
                 <a class="button" @click="cancel">{{ cancelText }}</a>
                 <a class="button is-primary" @click="ok">{{ okText }}</a>
@@ -63,6 +63,10 @@
                 default(){
                     return {};
                 }
+            },
+            modalId:{
+                type: Number,
+                default:''
             }
         },
         data(){
@@ -89,7 +93,7 @@
             hide () {
                 this.visible = false
             },
-            bgClick(){
+            onBgClick(){
                 if (this.bgClick) {
                     this.hide();
                 }
@@ -98,11 +102,11 @@
                 if (!this.verify) {
                     this.hide();
                 }
-                this.$dispatch('MODAL_OK_EVENT')
+                this.$dispatch(`MODAL_OK_EVENT${this.modalId}`)
             },
             cancel () {
                 this.hide();
-                this.$dispatch('MODAL_CANCEL_EVENT')
+                this.$dispatch(`MODAL_CANCEL_EVENT${this.modalId}`)
             },
             computeStyle(){
                 this.bodyStyle = {
@@ -122,7 +126,7 @@
 </script>
 
 <style lang="less" scoped>
-    .modal-background {
+    .modal-bg {
         position: fixed;
         top: 0;
         left: 0;
@@ -163,14 +167,14 @@
          border-color: #aeb1b5;
      }
     }
-    .modal-content {
+    .modal-ct {
         position: fixed;
         background-color: #fff;
         width: 640px;
         border-radius: 5px;
         z-index: 5001;
 
-    .modal-content-head {
+    .modal-ct-head {
         position: relative;
         padding: 15px;
         background-color: #f5f7fa;
@@ -221,7 +225,7 @@
          background-color: rgba(17, 17, 17, 0.5);
      }
     }
-    .modal-content-title {
+    .modal-ct-title {
         color: #222324;
         font-size: 20px;
         line-height: 1;
@@ -230,13 +234,14 @@
     }
     }
 
-    .modal-content-body {
-        width: 640px;
-        max-height: 600px;
+    .modal-ct-body {
+        max-height: 450px;
+        overflow-y: auto;
+        overflow-x: hidden;
         padding: 20px;
     }
 
-    .modal-content-foot {
+    .modal-ct-foot {
         position: relative;
         padding: 15px;
         background-color: #f5f7fa;

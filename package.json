@@ -1,6 +1,6 @@
 {
   "name": "vue-flexible-modal",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "a flexible modal component by vue.js",
   "author": {
     "email": "chuanww@sina.com",
@@ -60,6 +60,9 @@
     "vue-modal",
     "vue-popup",
     "vue-flexible-modal",
-    "bulma"
+    "bulma",
+    "message",
+    "MessageBox",
+    "alert"
   ]
 }

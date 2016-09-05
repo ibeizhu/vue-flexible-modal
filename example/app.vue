@@ -20,6 +20,9 @@
                 title:'I am modal title',
                 visible:false,
                 text:''
+            },
+            bgStyle:{
+                'z-index':'4000'
             }
         },
         methods:{
@@ -34,7 +37,8 @@
 <template>
     <div>
         <button @click="onShowModal">Click Show Modal</button>
-        <modal :title="modal.title" :visible.sync="modal.visible" :bg-click="false" :verify="true">
+        <modal :title="modal.title" :visible.sync="modal.visible" :bg-click="false" :verify="true" :bg-style="bgStyle">
+            <label class="label">Slot Area,write your code in here</label>
             <p class="control">
                 <label class="label">Name:</label>
                 <input class="input" type="text" v-model="modal.text" placeholder="Your name">

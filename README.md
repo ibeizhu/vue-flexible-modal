@@ -13,11 +13,11 @@ import Modal from 'vue-flexible-modal';
 ```
 
 # Usage
-Please view the example folder
+Please view the detail code in example folder
 
 ```html
 <script>
-    import Modal from '../src/Modal';
+    import Modal from 'vue-flexible-modal';
 
     export default {
         el: '#page',
@@ -26,7 +26,7 @@ Please view the example folder
         },
         events:{
             MODAL_OK_EVENT(){
-                // you can manual set modal show or hide use this.modal.visible
+                // you can set modal show or hide with the variable 'this.modal.visible' manually
                 // this.modal.visible = false;
             },
             MODAL_CANCEL_EVENT(){
@@ -65,11 +65,13 @@ Please view the example folder
 # API
 | Option             | Description                                                      | Value                  | Default  |
 |--------------------|------------------------------------------------------------------|------------------------|----------|
-| title            | Modal Title                                  | String                | ''  |
+| title            | Modal Title                                  | String                | 'Modal'  |
 | okText          | ok button text                              | String |        'ok'  |
 | cancelText         | cancel button text                             | String |          'cancel' |
-| visible             | control modal show or hide                                     | Boolean                 |     'false'     |
-| transition              | modal show or hide animation/transition                | String                | 'bounce'  |
-| verify         | if need verify form data when click ok button                           | Boolean                 |    'false'      |
-| bgClick | the switch to hide modal by clicking background      | Boolean                | 'true'  |
+| visible             | control the modal show or hide(primary key)     | Boolean     |     'false'     |
+| transition      | modal show or hide with your custom animation/transition   | String      | 'bounce'  |
+| verify         | if need verify form data when click ok button     | Boolean                 |    'false'      |
+| bgClick | the switch for hiding modal by clicking background      | Boolean                | 'true'  |
 | onlyBody  | hide the modal head and foot,only show body content | Boolean                | 'false'  |
+| bgStyle | custom set background style     | Object                | {}  |
+| contentStyle  | custom set content style | Object                | {}  |

@@ -1,6 +1,6 @@
 <template>
-    <div v-show="visible" class="modal-background" @click="bgClick"></div>
-    <div v-el:content class="modal-content" v-show="visible" :transition="transition" :style="bodyStyle">
+    <div v-show="visible" class="modal-background" @click="bgClick" :style="bgStyle"></div>
+    <div v-el:content class="modal-content" v-show="visible" :transition="transition" :style="[contentStyle,bodyStyle]">
         <header v-if="!onlyBody" class="modal-content-head">
             <p class="modal-content-title">{{ title }}</p>
             <button class="delete" @click="hide"></button>
@@ -8,9 +8,11 @@
         <section class="modal-content-body">
             <slot></slot>
         </section>
-        <footer v-if="!onlyBody" class="modal-content-foot">
-            <a class="button" @click="cancel">{{ cancelText }}</a>
-            <a class="button is-primary" @click="ok">{{ okText }}</a>
+        <footer v-if="!onlyBody" class="modal-content-foot clearfix">
+            <div class="fright">
+                <a class="button" @click="cancel">{{ cancelText }}</a>
+                <a class="button is-primary" @click="ok">{{ okText }}</a>
+            </div>
         </footer>
     </div>
 </template>
@@ -19,7 +21,8 @@
     export default {
         props: {
             title: {
-                type: String
+                type: String,
+                default:'Modal'
             },
             okText: {
                 type: String,
@@ -48,6 +51,18 @@
             onlyBody: {
                 type: Boolean,
                 default: false
+            },
+            bgStyle:{
+                type:Object,
+                default(){
+                    return {};
+                }
+            },
+            contentStyle:{
+                type:Object,
+                default(){
+                    return {};
+                }
             }
         },
         data(){
@@ -90,11 +105,9 @@
                 this.$dispatch('MODAL_CANCEL_EVENT')
             },
             computeStyle(){
-                let innerHeight = window.innerHeight - this.$els.content.offsetHeight > 0?window.innerHeight - this.$els.content.offsetHeight:0;
-                let innerWidth = window.innerWidth - this.$els.content.offsetWidth > 0?window.innerWidth - this.$els.content.offsetWidth:0;
                 this.bodyStyle = {
-                    top: `${innerHeight / 2}px`,
-                    left: `${innerWidth / 2}px`
+                    top: `${Math.max((window.innerHeight - this.$els.content.offsetHeight) / 2,0)}px`,
+                    left: `${Math.max((window.innerWidth - this.$els.content.offsetWidth) / 2,0)}px`
                 }
             },
             bind(el,eventName,fn){
@@ -116,7 +129,21 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, .5);
-        z-index: 1000;
+        z-index: 5000;
+    }
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .clearfix {
+        _overflow: hidden;
+    }
+    .fright{
+        float:right;
     }
     button,.button{
         background-color: #fff;
@@ -131,106 +158,111 @@
         text-align: center;
         white-space: nowrap;
         cursor: pointer;
-        &:hover{
-             color: #222324;
-             border-color: #aeb1b5;
-         }
+    &:hover{
+         color: #222324;
+         border-color: #aeb1b5;
+     }
     }
     .modal-content {
         position: fixed;
         background-color: #fff;
         width: 640px;
         border-radius: 5px;
-        z-index: 1001;
+        z-index: 5001;
 
-        .modal-content-head {
-            position: relative;
-            padding: 15px;
-            background-color: #f5f7fa;
-            border-bottom: 1px solid #d3d6db;
-            border-top-left-radius:5px;
-            border-top-right-radius:5px;
-            .delete {
-                -webkit-appearance: none;
-                background-color: rgba(18, 18, 18, 0.2);
-                border: none;
-                border-radius: 100%;
-                cursor: pointer;
-                display: inline-block;
-                height: 24px;
-                width: 24px;
-                position: absolute;
-                top: 15px;
-                right: 10px;
-                &:before {
-                    background-color: #fff;
-                    content: "";
-                    display: block;
-                    height: 2px;
-                    left: 50%;
-                    margin-left: -25%;
-                    margin-top: -1px;
-                    position: absolute;
-                    top: 50%;
-                    width: 50%;
-                    -webkit-transform: rotate(45deg);
-                    transform: rotate(45deg);
-                }
-                &:after {
-                    background-color: #fff;
-                    content: "";
-                    display: block;
-                    height: 2px;
-                    left: 50%;
-                    margin-left: -25%;
-                    margin-top: -1px;
-                    position: absolute;
-                    top: 50%;
-                    width: 50%;
-                    -webkit-transform: rotate(-45deg);
-                    transform: rotate(-45deg);
-                }
-                &:hover {
-                    background-color: rgba(17, 17, 17, 0.5);
-                }
-            }
-            .modal-content-title {
-                color: #222324;
-                font-size: 20px;
-                line-height: 1;
-                margin: 0;
-                padding: 0;
-            }
-        }
+    .modal-content-head {
+        position: relative;
+        padding: 15px;
+        background-color: #f5f7fa;
+        border-bottom: 1px solid #d3d6db;
+        border-top-left-radius:5px;
+        border-top-right-radius:5px;
+    .delete {
+        -webkit-appearance: none;
+        background-color: rgba(18, 18, 18, 0.2);
+        border: none;
+        border-radius: 100%;
+        cursor: pointer;
+        display: inline-block;
+        height: 24px;
+        width: 24px;
+        position: absolute;
+        top: 15px;
+        right: 10px;
+    &:before {
+         background-color: #fff;
+         content: "";
+         display: block;
+         height: 2px;
+         left: 50%;
+         margin-left: -25%;
+         margin-top: -1px;
+         position: absolute;
+         top: 50%;
+         width: 50%;
+         -webkit-transform: rotate(45deg);
+         transform: rotate(45deg);
+     }
+    &:after {
+         background-color: #fff;
+         content: "";
+         display: block;
+         height: 2px;
+         left: 50%;
+         margin-left: -25%;
+         margin-top: -1px;
+         position: absolute;
+         top: 50%;
+         width: 50%;
+         -webkit-transform: rotate(-45deg);
+         transform: rotate(-45deg);
+     }
+    &:hover {
+         background-color: rgba(17, 17, 17, 0.5);
+     }
+    }
+    .modal-content-title {
+        color: #222324;
+        font-size: 20px;
+        line-height: 1;
+        margin: 0;
+        padding: 0;
+    }
+    }
 
-        .modal-content-body {
-            width: 640px;
-            max-height: 600px;
-            padding: 20px;
-        }
+    .modal-content-body {
+        width: 640px;
+        max-height: 600px;
+        padding: 20px;
+    }
 
-        .modal-content-foot {
-            position: relative;
-            padding: 15px;
-            background-color: #f5f7fa;
-            border-top: 1px solid #d3d6db;
-            border-bottom-left-radius:5px;
-            border-bottom-right-radius:5px;
-            .is-primary{
-                background-color: #1fc8db;
-                border-color: transparent;
-                color: #fff;
-                margin-left:5px;
-                &:hover{
-                     background-color: #199fae;
-                     border-color: transparent;
-                     color: #fff;
-                 }
-            }
-            .button{
-                min-width:70px;
-            }
-        }
+    .modal-content-foot {
+        position: relative;
+        padding: 15px;
+        background-color: #f5f7fa;
+        border-top: 1px solid #d3d6db;
+        border-bottom-left-radius:5px;
+        border-bottom-right-radius:5px;
+    .actions{
+        position: absolute;
+        right:15px;
+        top:15px;
+    }
+    .is-primary{
+        background-color: #1fc8db;
+        border-color: transparent;
+        color: #fff;
+        margin-left:5px;
+    &:hover{
+         background-color: #199fae;
+         border-color: transparent;
+         color: #fff;
+     }
+    }
+    .button{
+        min-width:70px;
+    }
+    }
 
     }
     .bounce-transition {

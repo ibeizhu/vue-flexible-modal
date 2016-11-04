@@ -1,11 +1,11 @@
 <template>
     <div v-show="visible" class="modal-bg" @click="onBgClick" :style="bgStyle"></div>
-    <div v-el:content class="modal-ct" v-show="visible" :transition="transition" :style="[contentStyle,bodyStyle]">
+    <div v-el:content class="modal-ct" v-show="visible" :transition="transition" :style="[contentStyle,ctStyle]">
         <header v-if="!onlyBody" class="modal-ct-head">
             <p class="modal-ct-title">{{ title }}</p>
             <button class="delete" @click="hide"></button>
         </header>
-        <section class="modal-ct-body">
+        <section class="modal-ct-body" :style="bodyStyle">
             <slot></slot>
         </section>
         <footer v-if="!onlyBody" class="modal-ct-foot clearfix">
@@ -64,6 +64,12 @@
                     return {};
                 }
             },
+            bodyStyle:{
+                type:Object,
+                default(){
+                    return {};
+                }
+            },
             modalId:{
                 type: Number,
                 default:''
@@ -71,7 +77,7 @@
         },
         data(){
             return {
-                bodyStyle: {}
+                ctStyle: {}
             }
         },
         watch: {
@@ -102,14 +108,14 @@
                 if (!this.verify) {
                     this.hide();
                 }
-                this.$dispatch(`MODAL_OK_EVENT${this.modalId}`)
+                this.$dispatch(`MODAL_OK_EVENT`,this.modalId)
             },
             cancel () {
                 this.hide();
-                this.$dispatch(`MODAL_CANCEL_EVENT${this.modalId}`)
+                this.$dispatch(`MODAL_CANCEL_EVENT`,this.modalId)
             },
             computeStyle(){
-                this.bodyStyle = {
+                this.ctStyle = {
                     top: `${Math.max((window.innerHeight - this.$els.content.offsetHeight) / 2,0)}px`,
                     left: `${Math.max((window.innerWidth - this.$els.content.offsetWidth) / 2,0)}px`
                 }

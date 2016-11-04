@@ -1,7 +1,7 @@
 # vue-flexible-modal
 a flexible modal component by vue.js
 
-[Live Demo](http://imoment.vip/business/modal/index)
+[Live Demo](http://think.imoment.vip/business/modal/index)
 
 # Installation
 First, install `vue-flexible-modal` from npm:
@@ -74,6 +74,7 @@ Please view the detail code in example folder
 | onlyBody  | hide the modal head and foot,only show body content | Boolean                | 'false'  |
 | bgStyle | custom set background style     | Object                | {}  |
 | contentStyle  | custom set content style | Object                | {}  |
+| bodyStyle  | custom set body style | Object                | {}  |
 
 
 

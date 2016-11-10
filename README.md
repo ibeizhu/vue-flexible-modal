@@ -1,7 +1,7 @@
 # vue-flexible-modal
 a flexible modal component by vue.js
 
-[Live Demo](http://think.imoment.vip/business/modal/index)
+[Live Demo](http://think.imoment.vip/modal)
 
 # Installation
 First, install `vue-flexible-modal` from npm:

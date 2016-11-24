@@ -75,6 +75,8 @@ Please view the detail code in example folder
 | bgStyle | custom set background style     | Object                | {}  |
 | contentStyle  | custom set content style | Object                | {}  |
 | bodyStyle  | custom set body style | Object                | {}  |
+| modalId  | modalId | String                | ''  |
+| topGap  | custom set body top style | Number                | 0  |
 
 
 

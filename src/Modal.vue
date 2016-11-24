@@ -17,7 +17,7 @@
     </div>
 </template>
 
-<script>
+<script type="text/ecmascript-6">
     export default {
         props: {
             title: {
@@ -73,6 +73,10 @@
             modalId:{
                 type: Number,
                 default:''
+            },
+            topGap:{
+                type: Number,
+                default:0
             }
         },
         data(){
@@ -115,8 +119,11 @@
                 this.$dispatch(`MODAL_CANCEL_EVENT`,this.modalId)
             },
             computeStyle(){
+                if(!this.$els.content || !this.$els.content.offsetHeight){
+                    return;
+                }
                 this.ctStyle = {
-                    top: `${Math.max((window.innerHeight - this.$els.content.offsetHeight) / 2,0)}px`,
+                    top: `${Math.max((window.innerHeight - this.$els.content.offsetHeight) / 2 - this.topGap ,0)}px`,
                     left: `${Math.max((window.innerWidth - this.$els.content.offsetWidth) / 2,0)}px`
                 }
             },
@@ -131,7 +138,7 @@
     }
 </script>
 
-<style lang="less" scoped>
+<style rel="stylesheet/less" lang="less" scoped>
     .modal-bg {
         position: fixed;
         top: 0;

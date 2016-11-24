@@ -1,4 +1,4 @@
-<script>
+<script type="text/ecmascript-6">
     import Modal from '../src/Modal';
 
     export default {
@@ -66,7 +66,7 @@
         <label class="label">Use as MessageBox</label>
         <br>
         <button @click="onShowModal2">Click Show Modal2</button>
-        <modal :title="modal.title" :visible.sync="modal.visible" :verify="true">
+        <modal :title="modal.title" :visible.sync="modal.visible" :verify="true" >
             <label class="label">Slot Area,write your code in here</label>
             <p class="control">
                 <label class="label">Name:</label>
@@ -83,7 +83,7 @@
     </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="less" rel="stylesheet/less" scoped>
     .control {
         position: relative;
         text-align: left;

@@ -1,19 +1,21 @@
 <template>
+    <div>
     <div v-show="visible" class="modal-bg" @click="onBgClick" :style="bgStyle"></div>
-    <div v-el:content class="modal-ct" v-show="visible" :transition="transition" :style="[contentStyle,ctStyle]">
-        <header v-if="!onlyBody" class="modal-ct-head">
-            <p class="modal-ct-title">{{ title }}</p>
-            <button class="delete" @click="hide"></button>
-        </header>
-        <section class="modal-ct-body" :style="bodyStyle">
-            <slot></slot>
-        </section>
-        <footer v-if="!onlyBody" class="modal-ct-foot clearfix">
-            <div class="fright">
-                <a class="button" @click="cancel">{{ cancelText }}</a>
-                <a class="button is-primary" @click="ok">{{ okText }}</a>
-            </div>
-        </footer>
+        <div v-el:content class="modal-ct" v-show="visible" :transition="transition" :style="[contentStyle,ctStyle]">
+            <header v-if="!onlyBody" class="modal-ct-head">
+                <p class="modal-ct-title">{{ title }}</p>
+                <button class="delete" @click="hide"></button>
+            </header>
+            <section class="modal-ct-body" :style="bodyStyle">
+                <slot></slot>
+            </section>
+            <footer v-if="!onlyBody" class="modal-ct-foot clearfix">
+                <div class="fright">
+                    <a class="button" @click="cancel">{{ cancelText }}</a>
+                    <a class="button is-primary" @click="ok">{{ okText }}</a>
+                </div>
+            </footer>
+        </div>
     </div>
 </template>
 

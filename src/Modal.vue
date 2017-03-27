@@ -1,19 +1,21 @@
 <template>
-    <div v-show="visible" class="modal-bg" @click="onBgClick" :style="bgStyle"></div>
-    <div v-el:content class="modal-ct" v-show="visible" :transition="transition" :style="[contentStyle,ctStyle]">
-        <header v-if="!onlyBody" class="modal-ct-head">
-            <p class="modal-ct-title">{{ title }}</p>
-            <button class="delete" @click="hide"></button>
-        </header>
-        <section class="modal-ct-body" :style="bodyStyle">
-            <slot></slot>
-        </section>
-        <footer v-if="!onlyBody" class="modal-ct-foot clearfix">
-            <div class="fright">
-                <a class="button" @click="cancel">{{ cancelText }}</a>
-                <a class="button is-primary" @click="ok">{{ okText }}</a>
-            </div>
-        </footer>
+    <div>
+        <div v-show="visible" class="modal-bg" @click="onBgClick" :style="bgStyle"></div>
+        <div ref="content" class="modal-ct" v-show="visible" :transition="transition" :style="[contentStyle,ctStyle]">
+            <header v-if="!onlyBody" class="modal-ct-head">
+                <p class="modal-ct-title">{{ title }}</p>
+                <button class="delete" @click="hide"></button>
+            </header>
+            <section class="modal-ct-body" :style="bodyStyle">
+                <slot></slot>
+            </section>
+            <footer v-if="!onlyBody" class="modal-ct-foot clearfix">
+                <div class="fright">
+                    <a class="button" @click="cancel">{{ cancelText }}</a>
+                    <a class="button is-primary" @click="ok">{{ okText }}</a>
+                </div>
+            </footer>
+        </div>
     </div>
 </template>
 
@@ -119,12 +121,12 @@
                 this.$dispatch(`MODAL_CANCEL_EVENT`,this.modalId)
             },
             computeStyle(){
-                if(!this.$els.content || !this.$els.content.offsetHeight){
+                if(!this.$refs.content || !this.$refs.content.offsetHeight){
                     return;
                 }
                 this.ctStyle = {
-                    top: `${Math.max((window.innerHeight - this.$els.content.offsetHeight) / 2 - this.topGap ,0)}px`,
-                    left: `${Math.max((window.innerWidth - this.$els.content.offsetWidth) / 2,0)}px`
+                    top: `${Math.max((window.innerHeight - this.$refs.content.offsetHeight) / 2 - this.topGap ,0)}px`,
+                    left: `${Math.max((window.innerWidth - this.$refs.content.offsetWidth) / 2,0)}px`
                 }
             },
             bind(el,eventName,fn){
